@@ -1,0 +1,2353 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080912">
+<meta name="description" content="NEXORA — Intelligent technology for ambitious teams.">
+<title>NEXORA — Build Beyond Limits</title>
+
+<style>
+/* =========================================
+   1. DESIGN SYSTEM & RESET
+========================================= */
+:root {
+    --bg: #080912;
+    --surface: #101222;
+    --surface2: #15182b;
+    --white: #f8f9ff;
+    --muted: #9ba2bd;
+    --purple: #9b6cff;
+    --blue: #6c8cff;
+    --cyan: #54e8f5;
+    --border: rgba(255,255,255,.09);
+    --gradient: linear-gradient(115deg,#a78bfa,#7288ff 55%,#53e5f2);
+    --radius: 22px;
+    --max-width: 1200px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px;
+}
+
+body {
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+                 BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: var(--white);
+    background: var(--bg);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+body, button, a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font: inherit;
+}
+
+button, a {
+    touch-action: manipulation;
+}
+
+button:focus-visible, a:focus-visible {
+    outline: 2px solid var(--cyan);
+    outline-offset: 5px;
+}
+
+img, svg {
+    max-width: 100%;
+}
+
+.container {
+    width: min(var(--max-width), calc(100% - 48px));
+    margin-inline: auto;
+}
+
+.section {
+    padding: 110px 0;
+    position: relative;
+}
+
+.section-heading {
+    max-width: 700px;
+    margin: 0 auto 54px;
+    text-align: center;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #c8b6ff;
+    margin-bottom: 19px;
+}
+
+.eyebrow::before {
+    content: "";
+    width: 22px;
+    height: 1px;
+    background: var(--purple);
+}
+
+.section-heading h2,
+.about-copy h2 {
+    font-size: clamp(32px, 4.2vw, 53px);
+    letter-spacing: -2px;
+    line-height: 1.15;
+    font-weight: 800;
+}
+
+.gradient-text {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.section-heading p {
+    color: var(--muted);
+    margin-top: 18px;
+    font-size: 15px;
+}
+
+.muted {
+    color: var(--muted);
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 21px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    font-size: 13px;
+    font-weight: 750;
+    cursor: pointer;
+    transition: transform .25s, box-shadow .25s, background .25s;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+}
+
+.btn-primary {
+    background: linear-gradient(115deg,#9465ff,#6578f5);
+    color: white;
+    box-shadow: 0 8px 30px rgba(123,92,255,.22);
+}
+
+.btn-primary:hover {
+    box-shadow: 0 12px 38px rgba(123,92,255,.4);
+}
+
+.btn-outline {
+    background: rgba(255,255,255,.035);
+    border-color: var(--border);
+    color: white;
+}
+
+.btn-outline:hover {
+    background: rgba(255,255,255,.09);
+}
+
+.icon {
+    width: 21px;
+    height: 21px;
+    flex-shrink: 0;
+}
+
+/* =========================================
+   2. BACKGROUND EFFECTS
+========================================= */
+.ambient {
+    position: absolute;
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: .16;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.ambient.purple {
+    background: #713cff;
+}
+
+.ambient.cyan {
+    background: #00cde8;
+}
+
+.noise-grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    opacity: .2;
+    background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+    background-size: 54px 54px;
+    mask-image: linear-gradient(to bottom,black,transparent 90%);
+}
+
+/* =========================================
+   3. NAVIGATION
+========================================= */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,9,18,.82);
+    backdrop-filter: blur(22px);
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s;
+}
+
+.header.scrolled {
+    border-color: var(--border);
+}
+
+.navbar {
+    height: 78px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    flex-shrink: 0;
+}
+
+.brand-mark {
+    width: 34px;
+    height: 34px;
+    border-radius: 11px;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-size: 19px;
+    background: var(--gradient);
+    box-shadow: 0 4px 20px rgba(125,102,255,.3);
+}
+
+.brand span:last-child {
+    color: #a994ff;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.nav-links a {
+    color: #aeb3ca;
+    font-size: 13px;
+    transition: color .2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: white;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.nav-actions .btn {
+    padding: 11px 17px;
+    font-size: 12px;
+}
+
+.menu-toggle {
+    display: none;
+    place-items: center;
+    width: 43px;
+    height: 43px;
+    background: var(--surface);
+    color: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+/* =========================================
+   4. HERO SECTION
+========================================= */
+.hero {
+    min-height: 730px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 88px 0 90px;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.hero .ambient.purple {
+    top: 0;
+    right: 8%;
+}
+
+.hero .ambient.cyan {
+    bottom: -180px;
+    left: -200px;
+    opacity: .1;
+}
+
+.hero-layout {
+    display: grid;
+    grid-template-columns: 1.02fr .98fr;
+    gap: 45px;
+    align-items: center;
+}
+
+.hero-copy {
+    position: relative;
+    z-index: 2;
+    animation: slide-up .8s both;
+}
+
+.pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid rgba(167,139,250,.24);
+    background: rgba(139,92,246,.08);
+    color: #d3c6ff;
+    padding: 9px 13px;
+    border-radius: 99px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 26px;
+}
+
+.pulse-dot {
+    width: 7px;
+    height: 7px;
+    background: #6ef2b4;
+    border-radius: 50%;
+    box-shadow: 0 0 12px #6ef2b4;
+    animation: pulse 2s infinite;
+}
+
+.hero h1 {
+    font-size: clamp(43px,5.3vw,70px);
+    line-height: 1.07;
+    letter-spacing: -3.7px;
+    font-weight: 850;
+    max-width: 670px;
+}
+
+.hero-copy > p {
+    max-width: 490px;
+    margin: 25px 0 30px;
+    font-size: 15px;
+    line-height: 1.95;
+    color: var(--muted);
+}
+
+.hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 13px;
+}
+
+.hero-buttons .btn {
+    padding: 16px 21px;
+}
+
+.hero-note {
+    margin-top: 17px;
+    font-size: 11px;
+    color: #7f88a6;
+}
+
+.hero-note span {
+    color: #b4a0ff;
+    margin-right: 5px;
+}
+
+.hero-trust {
+    margin-top: 42px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.avatar-stack {
+    display: flex;
+    padding-left: 6px;
+}
+
+.avatar {
+    width: 35px;
+    height: 35px;
+    margin-left: -6px;
+    border: 2px solid var(--bg);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 10px;
+    font-weight: 800;
+    color: white;
+}
+
+.avatar:nth-child(1) { background: linear-gradient(135deg,#f59e0b,#e85d9e); }
+.avatar:nth-child(2) { background: linear-gradient(135deg,#22d3ee,#6366f1); }
+.avatar:nth-child(3) { background: linear-gradient(135deg,#34d399,#0e7490); }
+.avatar:nth-child(4) { background: linear-gradient(135deg,#c084fc,#7c3aed); }
+
+.trust-text strong {
+    display: block;
+    font-size: 12px;
+}
+
+.trust-text small {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 3px;
+}
+
+/* Hero product visual */
+.hero-visual {
+    min-width: 0;
+    position: relative;
+    animation: slide-up .9s .15s both;
+}
+
+.dashboard {
+    position: relative;
+    padding: 23px;
+    border: 1px solid rgba(255,255,255,.13);
+    border-radius: 23px;
+    background:
+        radial-gradient(ellipse at top right,rgba(120,88,255,.12),transparent 55%),
+        linear-gradient(145deg,#15172a,#0c0e1b);
+    box-shadow: 0 30px 100px rgba(0,0,0,.4);
+    overflow: hidden;
+    transform: perspective(1200px) rotateY(-4deg);
+    transition: transform .5s;
+}
+
+.dashboard:hover {
+    transform: perspective(1200px) rotateY(0) translateY(-4px);
+}
+
+.dash-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 21px;
+    border-bottom: 1px solid var(--border);
+}
+
+.dash-head strong {
+    display: block;
+    font-size: 14px;
+}
+
+.dash-head small {
+    color: var(--muted);
+    display: block;
+    margin-top: 4px;
+    font-size: 10px;
+}
+
+.live {
+    color: #78e8b1;
+    border: 1px solid rgba(110,231,183,.2);
+    background: rgba(52,211,153,.07);
+    border-radius: 8px;
+    padding: 6px 9px;
+    font-size: 9px;
+    white-space: nowrap;
+}
+
+.dash-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 18px 0;
+}
+
+.stat-card {
+    background: rgba(255,255,255,.035);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 15px;
+}
+
+.stat-label {
+    color: var(--muted);
+    font-size: 10px;
+}
+
+.stat-value {
+    font-size: clamp(23px,2.5vw,31px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-top: 6px;
+}
+
+.stat-growth {
+    color: #70e7ad;
+    font-size: 10px;
+    margin-top: 5px;
+}
+
+.chart-panel {
+    background: rgba(255,255,255,.025);
+    border: 1px solid var(--border);
+    padding: 17px;
+    border-radius: 15px;
+}
+
+.chart-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+    font-size: 11px;
+    margin-bottom: 24px;
+}
+
+.chart-top span:last-child {
+    color: #b5a0ff;
+}
+
+.chart {
+    height: 120px;
+    display: flex;
+    align-items: end;
+    gap: 9px;
+    position: relative;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+    background: repeating-linear-gradient(
+        to bottom,transparent 0,transparent 29px,
+        rgba(255,255,255,.045) 30px
+    );
+}
+
+.bar {
+    flex: 1;
+    min-width: 4px;
+    height: var(--h);
+    border-radius: 5px 5px 0 0;
+    background: linear-gradient(to top,#6f49e8,#68dff0);
+    opacity: .82;
+    transform-origin: bottom;
+    animation: grow-bar .9s both;
+    animation-delay: var(--delay,0s);
+    transition: filter .2s, opacity .2s;
+}
+
+.bar:hover {
+    opacity: 1;
+    filter: brightness(1.4);
+}
+
+.chart-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    color: #78819d;
+    font-size: 9px;
+}
+
+.float-card {
+    position: absolute;
+    padding: 13px 16px;
+    border-radius: 14px;
+    background: rgba(21,24,43,.96);
+    border: 1px solid rgba(255,255,255,.13);
+    box-shadow: 0 18px 45px rgba(0,0,0,.35);
+    backdrop-filter: blur(20px);
+    animation: float 4s ease-in-out infinite alternate;
+}
+
+.float-card.one {
+    top: 12%;
+    right: -23px;
+}
+
+.float-card.two {
+    bottom: 9%;
+    left: -30px;
+    animation-delay: -2s;
+}
+
+.float-card strong {
+    display: block;
+    font-size: 17px;
+    letter-spacing: -.5px;
+}
+
+.float-card small {
+    display: block;
+    color: var(--muted);
+    font-size: 10px;
+}
+
+.float-card .positive {
+    color: #73e7ae;
+}
+
+.float-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 9px;
+    background: rgba(139,92,246,.2);
+    color: #c3aaff;
+    margin-bottom: 8px;
+}
+
+/* =========================================
+   5. TRUST / LOGOS
+========================================= */
+.trusted {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: rgba(255,255,255,.012);
+    padding: 27px 0 30px;
+}
+
+.trusted-title {
+    color: #858da8;
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+}
+
+.logo-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.client-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -.5px;
+    color: #7d849f;
+    transition: color .25s;
+}
+
+.client-logo:hover {
+    color: #e5e7ff;
+}
+
+.client-symbol {
+    font-size: 23px;
+}
+
+/* =========================================
+   6. FEATURES
+========================================= */
+.features-section {
+    overflow: hidden;
+}
+
+.features-section .ambient {
+    top: 30%;
+    right: -330px;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 20px;
+}
+
+.feature-card {
+    padding: 29px 26px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+    transition: border-color .3s, transform .3s, background .3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card::after {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    top: -120px;
+    right: -100px;
+    background: var(--glow,rgba(139,92,246,.15));
+    filter: blur(40px);
+    opacity: 0;
+    transition: opacity .3s;
+    pointer-events: none;
+}
+
+.feature-card:hover {
+    transform: translateY(-7px);
+    border-color: rgba(167,139,250,.38);
+    background: linear-gradient(145deg,rgba(139,92,246,.07),rgba(255,255,255,.015));
+}
+
+.feature-card:hover::after {
+    opacity: 1;
+}
+
+.feature-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 25px;
+    border: 1px solid rgba(255,255,255,.1);
+    background: var(--icon-bg,rgba(139,92,246,.14));
+    color: var(--icon-color,#bba5ff);
+}
+
+.feature-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.feature-card h3 {
+    font-size: 18px;
+    letter-spacing: -.5px;
+    margin-bottom: 11px;
+}
+
+.feature-card p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.9;
+}
+
+.feature-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 22px;
+    color: #c3b1ff;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.feature-link span {
+    transition: transform .2s;
+}
+
+.feature-link:hover span {
+    transform: translateX(5px);
+}
+
+/* =========================================
+   7. ABOUT / PLATFORM
+========================================= */
+.about-section {
+    background: linear-gradient(180deg,transparent,rgba(112,79,232,.045),transparent);
+    overflow: hidden;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 80px;
+}
+
+.about-copy h2 {
+    max-width: 530px;
+}
+
+.about-copy > p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 2;
+    margin: 22px 0;
+}
+
+.check-list {
+    display: grid;
+    gap: 15px;
+    margin: 26px 0 30px;
+}
+
+.check-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 13px;
+    color: #dce0f5;
+}
+
+.check {
+    flex-shrink: 0;
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    background: rgba(82,225,171,.12);
+    color: #6ce5ad;
+    display: grid;
+    place-items: center;
+    font-size: 12px;
+}
+
+.about-visual {
+    position: relative;
+    min-width: 0;
+}
+
+.orbit-box {
+    min-height: 430px;
+    border: 1px solid var(--border);
+    border-radius: 27px;
+    background:
+        radial-gradient(circle at center,rgba(139,92,246,.13),transparent 55%),
+        #0d0f1e;
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+}
+
+.orbit-box::before,
+.orbit-box::after {
+    content: "";
+    position: absolute;
+    width: 290px;
+    height: 290px;
+    border: 1px solid rgba(174,150,255,.16);
+    border-radius: 50%;
+    animation: orbit 24s linear infinite;
+}
+
+.orbit-box::after {
+    width: 210px;
+    height: 210px;
+    animation-direction: reverse;
+    border-color: rgba(84,232,245,.2);
+}
+
+.orbit-center {
+    position: relative;
+    z-index: 2;
+    width: 100px;
+    height: 100px;
+    border-radius: 30px;
+    display: grid;
+    place-items: center;
+    font-size: 46px;
+    font-weight: 900;
+    background: linear-gradient(145deg,#8b5cf6,#4b69d9);
+    box-shadow: 0 0 80px rgba(139,92,246,.4);
+}
+
+.orbit-node {
+    position: absolute;
+    z-index: 3;
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 17px;
+    background: #171a30;
+    border: 1px solid rgba(255,255,255,.12);
+    box-shadow: 0 12px 35px rgba(0,0,0,.25);
+    font-size: 23px;
+    animation: float 4s ease-in-out infinite alternate;
+}
+
+.node-1 { top: 19%; left: 25%; }
+.node-2 { top: 23%; right: 21%; animation-delay: -1s; }
+.node-3 { bottom: 20%; left: 22%; animation-delay: -2s; }
+.node-4 { bottom: 18%; right: 23%; animation-delay: -3s; }
+
+.orbit-label {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    text-align: center;
+    color: #858daa;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+/* =========================================
+   8. NUMBERS / METRICS
+========================================= */
+.metrics {
+    padding: 45px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 25px;
+}
+
+.metric {
+    text-align: center;
+    padding: 10px;
+}
+
+.metric strong {
+    display: block;
+    font-size: clamp(29px,4vw,44px);
+    letter-spacing: -2px;
+    line-height: 1.2;
+}
+
+.metric span {
+    display: block;
+    margin-top: 9px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+/* =========================================
+   9. TESTIMONIALS
+========================================= */
+.testimonials-section {
+    overflow: hidden;
+}
+
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 20px;
+}
+
+.testimonial-card {
+    padding: 27px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,.025);
+    border-radius: 20px;
+    transition: transform .3s, border-color .3s;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(139,92,246,.35);
+}
+
+.stars {
+    color: #f5c56d;
+    letter-spacing: 3px;
+    font-size: 13px;
+}
+
+.testimonial-card blockquote {
+    margin: 21px 0 26px;
+    color: #d7dbee;
+    font-size: 13px;
+    line-height: 1.95;
+}
+
+.person {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.person-avatar {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    font-weight: 800;
+    font-size: 12px;
+    color: white;
+}
+
+.person-avatar.a { background: linear-gradient(135deg,#9b6cff,#5061e9); }
+.person-avatar.b { background: linear-gradient(135deg,#15c6d8,#4d73e7); }
+.person-avatar.c { background: linear-gradient(135deg,#ee8a79,#a44fba); }
+
+.person strong {
+    display: block;
+    font-size: 12px;
+}
+
+.person small {
+    display: block;
+    color: var(--muted);
+    font-size: 10px;
+    margin-top: 4px;
+}
+
+/* =========================================
+   10. PRICING
+========================================= */
+.pricing-section {
+    background: linear-gradient(180deg,transparent,rgba(109,78,226,.045),transparent);
+}
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 20px;
+    align-items: stretch;
+}
+
+.price-card {
+    position: relative;
+    padding: 29px;
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    background: rgba(255,255,255,.025);
+    display: flex;
+    flex-direction: column;
+}
+
+.price-card.featured {
+    border-color: rgba(155,108,255,.6);
+    background:
+        radial-gradient(ellipse at top,rgba(139,92,246,.14),transparent 65%),
+        #111225;
+    box-shadow: 0 20px 65px rgba(90,65,210,.12);
+}
+
+.popular-label {
+    position: absolute;
+    top: -13px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    background: var(--gradient);
+    color: #090a17;
+    font-weight: 900;
+    font-size: 10px;
+    padding: 6px 13px;
+    border-radius: 99px;
+}
+
+.plan-name {
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.plan-description {
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 12px;
+    min-height: 39px;
+}
+
+.price {
+    font-size: 39px;
+    font-weight: 850;
+    letter-spacing: -2px;
+    margin-top: 20px;
+}
+
+.price small {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0;
+    font-weight: 500;
+}
+
+.price-note {
+    color: #7e87a2;
+    font-size: 10px;
+    margin-bottom: 21px;
+}
+
+.price-card .btn {
+    width: 100%;
+}
+
+.plan-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 24px 0;
+}
+
+.plan-list {
+    display: grid;
+    gap: 13px;
+    list-style: none;
+    margin-bottom: 25px;
+    flex: 1;
+}
+
+.plan-list li {
+    display: flex;
+    gap: 10px;
+    font-size: 12px;
+    color: #c5cbe0;
+}
+
+.plan-list li span {
+    color: #76e5b0;
+}
+
+/* =========================================
+   11. FAQ
+========================================= */
+.faq-list {
+    max-width: 760px;
+    margin: auto;
+    display: grid;
+    gap: 12px;
+}
+
+.faq-item {
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: rgba(255,255,255,.02);
+    overflow: hidden;
+}
+
+.faq-question {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    gap: 20px;
+    padding: 21px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.faq-symbol {
+    font-size: 20px;
+    color: #b4a0ff;
+    transition: transform .25s;
+}
+
+.faq-answer {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows .3s;
+}
+
+.faq-answer > div {
+    overflow: hidden;
+}
+
+.faq-answer p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.9;
+    padding: 0 21px 21px;
+}
+
+.faq-item.open .faq-answer {
+    grid-template-rows: 1fr;
+}
+
+.faq-item.open .faq-symbol {
+    transform: rotate(45deg);
+}
+
+/* =========================================
+   12. CALL TO ACTION
+========================================= */
+.cta-section {
+    padding: 40px 0 110px;
+}
+
+.cta-box {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    border-radius: 28px;
+    border: 1px solid rgba(173,148,255,.25);
+    background:
+        radial-gradient(ellipse at 20% 0%,rgba(124,83,255,.23),transparent 50%),
+        radial-gradient(ellipse at 90% 100%,rgba(47,190,222,.12),transparent 50%),
+        #101222;
+    padding: 75px 25px;
+}
+
+.cta-box .ambient {
+    top: -250px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.cta-box h2 {
+    font-size: clamp(32px,4.5vw,54px);
+    letter-spacing: -2px;
+    line-height: 1.15;
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.cta-box p {
+    color: var(--muted);
+    font-size: 14px;
+    margin: 20px auto 27px;
+    max-width: 520px;
+    position: relative;
+}
+
+.cta-box .btn {
+    position: relative;
+}
+
+/* =========================================
+   13. FOOTER
+========================================= */
+.footer {
+    border-top: 1px solid var(--border);
+    background: #070810;
+}
+
+.footer-main {
+    padding: 65px 0 48px;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 45px;
+}
+
+.footer-brand p {
+    max-width: 270px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.9;
+    margin-top: 19px;
+}
+
+.socials {
+    display: flex;
+    gap: 10px;
+    margin-top: 21px;
+}
+
+.socials a {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,.025);
+    color: #aab1ca;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 800;
+    transition: color .2s, background .2s;
+}
+
+.socials a:hover {
+    color: white;
+    background: #22203a;
+}
+
+.footer-col h4 {
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+.footer-col ul {
+    display: grid;
+    gap: 13px;
+    list-style: none;
+}
+
+.footer-col a {
+    font-size: 12px;
+    color: #8d95b0;
+    transition: color .2s;
+}
+
+.footer-col a:hover {
+    color: white;
+}
+
+.footer-bottom {
+    min-height: 70px;
+    padding: 18px 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.footer-bottom p,
+.footer-legal a {
+    font-size: 10px;
+    color: #7e86a0;
+}
+
+.footer-legal {
+    display: flex;
+    gap: 22px;
+}
+
+/* =========================================
+   14. INTERACTIONS & ANIMATIONS
+========================================= */
+.reveal {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity .7s ease, transform .7s ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes slide-up {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(110,242,180,.4); }
+    50% { box-shadow: 0 0 0 6px rgba(110,242,180,0); }
+}
+
+@keyframes float {
+    from { transform: translateY(-7px); }
+    to { transform: translateY(9px); }
+}
+
+@keyframes grow-bar {
+    from { transform: scaleY(0); }
+    to { transform: scaleY(1); }
+}
+
+@keyframes orbit {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+    }
+
+    .reveal {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* =========================================
+   15. RESPONSIVE DESIGN
+========================================= */
+@media (max-width: 1000px) {
+    .nav-links { gap: 19px; }
+    .hero-layout { gap: 28px; }
+    .hero h1 { font-size: clamp(43px,5.5vw,59px); }
+    .dashboard { padding: 17px; }
+    .float-card.one { right: -8px; }
+    .float-card.two { left: -8px; }
+    .about-grid { gap: 40px; }
+    .feature-card { padding: 24px 21px; }
+    .footer-main { gap: 28px; }
+}
+
+@media (max-width: 760px) {
+    .container { width: min(100% - 36px,560px); }
+    .section { padding: 78px 0; }
+
+    .navbar { height: 70px; }
+    .brand { font-size: 20px; }
+    .menu-toggle { display: grid; }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 18px;
+        right: 18px;
+        padding: 17px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        border: 1px solid var(--border);
+        background: rgba(13,15,29,.98);
+        backdrop-filter: blur(20px);
+        border-radius: 17px;
+        box-shadow: 0 20px 45px rgba(0,0,0,.35);
+    }
+
+    .nav-links.open { display: flex; }
+
+    .nav-links a {
+        padding: 13px 10px;
+        border-radius: 9px;
+    }
+
+    .nav-links a:hover { background: rgba(255,255,255,.05); }
+    .nav-actions > .btn { display: none; }
+
+    .hero {
+        min-height: unset;
+        padding: 65px 0 80px;
+    }
+
+    .hero-layout {
+        grid-template-columns: 1fr;
+        gap: 65px;
+    }
+
+    .hero h1 {
+        font-size: clamp(42px,9.3vw,63px);
+        letter-spacing: -2.6px;
+    }
+
+    .hero-copy > p { font-size: 14px; }
+    .hero-visual { width: 100%; max-width: 550px; margin: auto; }
+    .dashboard { transform: none; }
+    .dashboard:hover { transform: translateY(-3px); }
+
+    .section-heading { margin-bottom: 35px; }
+    .section-heading h2, .about-copy h2 { letter-spacing: -1.3px; }
+
+    .feature-grid { grid-template-columns: repeat(2,1fr); gap: 13px; }
+    .feature-card { padding: 22px 17px; }
+    .feature-card h3 { font-size: 16px; }
+    .feature-card p { font-size: 12px; }
+    .feature-icon { margin-bottom: 19px; }
+
+    .about-grid { grid-template-columns: 1fr; gap: 38px; }
+    .about-visual { grid-row: 1; }
+    .orbit-box { min-height: 350px; }
+    .orbit-box::before { width: 250px; height: 250px; }
+    .orbit-box::after { width: 185px; height: 185px; }
+
+    .metrics-grid { grid-template-columns: repeat(2,1fr); row-gap: 25px; }
+    .testimonial-grid { grid-template-columns: 1fr; }
+    .testimonial-card { padding: 25px; }
+    .pricing-grid { grid-template-columns: 1fr; gap: 24px; }
+    .price-card { padding: 27px; }
+    .plan-description { min-height: unset; }
+
+    .cta-section { padding: 15px 0 75px; }
+    .cta-box { padding: 55px 20px; }
+
+    .footer-main { grid-template-columns: repeat(2,1fr); gap: 36px 24px; }
+    .footer-brand { grid-column: 1/-1; }
+}
+
+@media (max-width: 420px) {
+    .container { width: calc(100% - 30px); }
+    .hero h1 { font-size: 41px; }
+    .hero-buttons { flex-direction: column; align-items: stretch; }
+    .hero-buttons .btn { width: 100%; }
+    .hero-trust { gap: 12px; }
+    .dashboard { padding: 13px; border-radius: 18px; }
+    .dash-stats { gap: 8px; }
+    .stat-card { padding: 11px; }
+    .chart-panel { padding: 12px; }
+    .chart { gap: 5px; height: 95px; }
+    .float-card { padding: 10px; }
+    .float-card.one { right: -3px; top: -29px; }
+    .float-card.two { left: -3px; bottom: -28px; }
+    .float-card strong { font-size: 14px; }
+
+    .feature-grid { grid-template-columns: 1fr; }
+    .feature-card { padding: 23px; }
+    .orbit-box { min-height: 310px; }
+    .orbit-box::before { width: 220px; height: 220px; }
+    .orbit-box::after { width: 165px; height: 165px; }
+    .orbit-node { width: 46px; height: 46px; font-size: 19px; }
+    .orbit-center { width: 82px; height: 82px; border-radius: 25px; }
+
+    .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .footer-legal { flex-wrap: wrap; gap: 15px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================================
+     HEADER / NAVBAR
+========================================= -->
+<header class="header" id="header">
+    <nav class="navbar container" aria-label="Main navigation">
+
+        <a class="brand" href="#home" aria-label="Nexora home">
+            <span class="brand-mark">N</span>
+            NEXORA<span>.</span>
+        </a>
+
+        <div class="nav-links" id="navLinks">
+            <a href="#home" class="active">Home</a>
+            <a href="#features">Features</a>
+            <a href="#about">Platform</a>
+            <a href="#testimonials">Reviews</a>
+            <a href="#pricing">Pricing</a>
+        </div>
+
+        <div class="nav-actions">
+            <a href="#pricing" class="btn btn-primary">Get Started ↗</a>
+
+            <button class="menu-toggle" id="menuToggle"
+                aria-label="Toggle navigation" aria-expanded="false"
+                aria-controls="navLinks">
+                <svg class="icon" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round">
+                    <path d="M4 7h16M4 12h16M4 17h16"/>
+                </svg>
+            </button>
+        </div>
+
+    </nav>
+</header>
+
+<main>
+
+<!-- =========================================
+     HERO SECTION
+========================================= -->
+<section class="hero" id="home">
+    <div class="noise-grid"></div>
+    <div class="ambient purple"></div>
+    <div class="ambient cyan"></div>
+
+    <div class="container hero-layout">
+
+        <div class="hero-copy">
+            <div class="pill">
+                <span class="pulse-dot"></span>
+                THE NEXT ERA OF DIGITAL INNOVATION
+            </div>
+
+            <h1>
+                Think Bigger.<br>
+                Build <span class="gradient-text">Smarter.</span><br>
+                Go Beyond.
+            </h1>
+
+            <p>
+                One powerful platform to transform ambitious ideas
+                into extraordinary results. Work smarter, automate
+                faster, and build the future your business deserves.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="#pricing" class="btn btn-primary">
+                    Start Your Journey
+                    <span>↗</span>
+                </a>
+
+                <a href="#features" class="btn btn-outline">
+                    Explore Platform
+                    <span>→</span>
+                </a>
+            </div>
+
+            <div class="hero-note">
+                <span>✦</span> No credit card required · Built for modern teams
+            </div>
+
+            <div class="hero-trust">
+                <div class="avatar-stack" aria-hidden="true">
+                    <div class="avatar">JD</div>
+                    <div class="avatar">AM</div>
+                    <div class="avatar">SK</div>
+                    <div class="avatar">+</div>
+                </div>
+
+                <div class="trust-text">
+                    <strong>Made for ambitious creators</strong>
+                    <small>Ideas today. Innovation tomorrow.</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product dashboard preview -->
+        <div class="hero-visual">
+            <div class="dashboard">
+
+                <div class="dash-head">
+                    <div>
+                        <strong>Workspace Overview</strong>
+                        <small>Your business at a glance</small>
+                    </div>
+                    <span class="live">● SYSTEM ONLINE</span>
+                </div>
+
+                <div class="dash-stats">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Revenue</div>
+                        <div class="stat-value">$48.2K</div>
+                        <div class="stat-growth">↗ +18.6% this month</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-label">Active Projects</div>
+                        <div class="stat-value">128</div>
+                        <div class="stat-growth">↗ +12 new projects</div>
+                    </div>
+                </div>
+
+                <div class="chart-panel">
+                    <div class="chart-top">
+                        <span>Growth Analytics</span>
+                        <span>Last 8 months ↗</span>
+                    </div>
+
+                    <div class="chart" aria-label="Illustrative growth chart">
+                        <div class="bar" style="--h:35%;--delay:.05s"></div>
+                        <div class="bar" style="--h:49%;--delay:.1s"></div>
+                        <div class="bar" style="--h:41%;--delay:.15s"></div>
+                        <div class="bar" style="--h:62%;--delay:.2s"></div>
+                        <div class="bar" style="--h:53%;--delay:.25s"></div>
+                        <div class="bar" style="--h:76%;--delay:.3s"></div>
+                        <div class="bar" style="--h:67%;--delay:.35s"></div>
+                        <div class="bar" style="--h:96%;--delay:.4s"></div>
+                    </div>
+
+                    <div class="chart-labels">
+                        <span>Mar</span><span>Apr</span><span>May</span>
+                        <span>Jun</span><span>Jul</span><span>Aug</span>
+                        <span>Sep</span><span>Oct</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="float-card one">
+                <span class="float-icon">✦</span>
+                <strong>+24.8%</strong>
+                <small class="positive">Performance growth</small>
+            </div>
+
+            <div class="float-card two">
+                <strong>99.9%</strong>
+                <small>Platform availability</small>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- =========================================
+     TRUSTED BY
+========================================= -->
+<section class="trusted" aria-label="Technology ecosystem">
+    <div class="container">
+        <p class="trusted-title">POWERING THE NEXT GENERATION OF INNOVATION</p>
+
+        <div class="logo-row">
+            <div class="client-logo"><span class="client-symbol">◈</span> vertex</div>
+            <div class="client-logo"><span class="client-symbol">✳</span> orbit</div>
+            <div class="client-logo"><span class="client-symbol">⬡</span> prism</div>
+            <div class="client-logo"><span class="client-symbol">◉</span> nucleus</div>
+            <div class="client-logo"><span class="client-symbol">⌘</span> quantum</div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================
+     FEATURES
+========================================= -->
+<section class="section features-section" id="features">
+    <div class="ambient purple"></div>
+
+    <div class="container">
+        <div class="section-heading reveal">
+            <span class="eyebrow">POWERFUL BY DESIGN</span>
+            <h2>Everything you need.<br><span class="gradient-text">Nothing holding you back.</span></h2>
+            <p>
+                A smarter digital ecosystem designed to simplify
+                complex work, unlock creativity and accelerate growth.
+            </p>
+        </div>
+
+        <div class="feature-grid">
+
+            <article class="feature-card reveal"
+                style="--icon-bg:rgba(139,92,246,.15);--icon-color:#b8a0ff;--glow:rgba(139,92,246,.2)">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3v3m0 12v3M3 12h3m12 0h3"/>
+                        <circle cx="12" cy="12" r="5"/>
+                        <path d="m16 8 3-3M5 19l3-3"/>
+                    </svg>
+                </div>
+                <h3>Intelligent Automation</h3>
+                <p>Eliminate repetitive tasks with smarter workflows that free your team to focus on meaningful work.</p>
+                <a href="#about" class="feature-link">Discover more <span>→</span></a>
+            </article>
+
+            <article class="feature-card reveal"
+                style="--icon-bg:rgba(84,232,245,.11);--icon-color:#70e9f3;--glow:rgba(34,211,238,.18)">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 3v18h18"/>
+                        <path d="m7 14 4-4 4 3 6-7"/>
+                        <path d="M16 6h5v5"/>
+                    </svg>
+                </div>
+                <h3>Real-Time Analytics</h3>
+                <p>Turn complex information into clear insights and make confident, data-driven decisions.</p>
+                <a href="#about" class="feature-link">Discover more <span>→</span></a>
+            </article>
+
+            <article class="feature-card reveal"
+                style="--icon-bg:rgba(244,114,182,.11);--icon-color:#f6a2d0;--glow:rgba(244,114,182,.17)">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/>
+                        <path d="m9 12 2 2 4-4"/>
+                    </svg>
+                </div>
+                <h3>Enterprise Security</h3>
+                <p>Protect your digital operations with security-minded design, access controls and reliable workflows.</p>
+                <a href="#about" class="feature-link">Discover more <span>→</span></a>
+            </article>
+
+            <article class="feature-card reveal"
+                style="--icon-bg:rgba(251,191,36,.11);--icon-color:#fbd16d;--glow:rgba(251,191,36,.14)">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3v18M3 12h18"/>
+                        <circle cx="12" cy="12" r="9"/>
+                        <path d="m8 8 8 8m0-8-8 8"/>
+                    </svg>
+                </div>
+                <h3>Flexible Integrations</h3>
+                <p>Connect your essential tools and bring scattered workflows together in one unified workspace.</p>
+                <a href="#about" class="feature-link">Discover more <span>→</span></a>
+            </article>
+
+            <article class="feature-card reveal"
+                style="--icon-bg:rgba(52,211,153,.11);--icon-color:#72e8b6;--glow:rgba(52,211,153,.14)">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="7" rx="2"/>
+                        <rect x="14" y="3" width="7" height="7" rx="2"/>
+                        <rect x="3" y="14" width="7" height="7" rx="2"/>
+                        <rect x="14" y="14" width="7" height="7" rx="2"/>
+                    </svg>
+                </div>
+                <h3>Unified Workspace</h3>
+                <p>Organize projects, collaborate with teammates and keep every important detail within reach.</p>
+                <a href="#about" class="feature-link">Discover more <span>→</span></a>
+            </article>
+
+            <article class="feature-card reveal"
+                style="--icon-bg:rgba(96,165,250,.11);--icon-color:#93c5fd;--glow:rgba(96,165,250,.17)">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3 4 14h7l-1 7 10-12h-7l-1-6Z"/>
+                    </svg>
+                </div>
+                <h3>Built to Scale</h3>
+                <p>Start with what you need today and expand your workflows as your business and ambitions grow.</p>
+                <a href="#about" class="feature-link">Discover more <span>→</span></a>
+            </article>
+
+        </div>
+    </div>
+</section>
+
+<!-- =========================================
+     ABOUT / PLATFORM
+========================================= -->
+<section class="section about-section" id="about">
+    <div class="container about-grid">
+
+        <div class="about-copy reveal">
+            <span class="eyebrow">MEET YOUR NEW WORKFLOW</span>
+            <h2>Less complexity.<br><span class="gradient-text">More possibility.</span></h2>
+
+            <p>
+                Great technology should make work feel effortless.
+                NEXORA brings your processes, insights and creative
+                thinking together in a workspace built around progress.
+            </p>
+
+            <div class="check-list">
+                <div class="check-item">
+                    <span class="check">✓</span>
+                    <span>One connected environment for your everyday workflows.</span>
+                </div>
+                <div class="check-item">
+                    <span class="check">✓</span>
+                    <span>Clear insights that help you understand what matters.</span>
+                </div>
+                <div class="check-item">
+                    <span class="check">✓</span>
+                    <span>A flexible foundation designed to grow with your goals.</span>
+                </div>
+            </div>
+
+            <a href="#pricing" class="btn btn-primary">Explore the Platform ↗</a>
+        </div>
+
+        <div class="about-visual reveal">
+            <div class="orbit-box">
+                <div class="orbit-node node-1">✦</div>
+                <div class="orbit-node node-2">⌘</div>
+                <div class="orbit-node node-3">◈</div>
+                <div class="orbit-node node-4">⚡</div>
+                <div class="orbit-center">N</div>
+                <div class="orbit-label">ONE PLATFORM · ENDLESS POSSIBILITIES</div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- =========================================
+     METRICS
+========================================= -->
+<section class="metrics">
+    <div class="container metrics-grid">
+
+        <div class="metric reveal">
+            <strong><span class="counter" data-target="98">0</span>%</strong>
+            <span>Customer satisfaction target</span>
+        </div>
+
+        <div class="metric reveal">
+            <strong><span class="counter" data-target="3">0</span>x</strong>
+            <span>Faster workflow potential</span>
+        </div>
+
+        <div class="metric reveal">
+            <strong><span class="counter" data-target="24">0</span>/7</strong>
+            <span>Work from anywhere</span>
+        </div>
+
+        <div class="metric reveal">
+            <strong><span class="counter" data-target="100">0</span>%</strong>
+            <span>Focus on your next big idea</span>
+        </div>
+
+    </div>
+</section>
+
+<!-- =========================================
+     TESTIMONIALS
+========================================= -->
+<section class="section testimonials-section" id="testimonials">
+    <div class="container">
+
+        <div class="section-heading reveal">
+            <span class="eyebrow">WORDS THAT MATTER</span>
+            <h2>Built for people who<br><span class="gradient-text">think differently.</span></h2>
+            <p>
+                Great experiences begin with thoughtful tools.
+                Here is sample testimonial content for your website design.
+            </p>
+        </div>
+
+        <div class="testimonial-grid">
+
+            <article class="testimonial-card reveal">
+                <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+                <blockquote>
+                    "The clean experience and thoughtful workflow
+                    design make this a great direction for a modern
+                    digital product."
+                </blockquote>
+                <div class="person">
+                    <div class="person-avatar a">AM</div>
+                    <div>
+                        <strong>Alex Morgan</strong>
+                        <small>Product Designer</small>
+                    </div>
+                </div>
+            </article>
+
+            <article class="testimonial-card reveal">
+                <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+                <blockquote>
+                    "Everything feels organized, polished and easy
+                    to navigate. The interface puts the important
+                    information front and center."
+                </blockquote>
+                <div class="person">
+                    <div class="person-avatar b">SJ</div>
+                    <div>
+                        <strong>Sarah Johnson</strong>
+                        <small>Startup Founder</small>
+                    </div>
+                </div>
+            </article>
+
+            <article class="testimonial-card reveal">
+                <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+                <blockquote>
+                    "A strong example of how modern design can
+                    combine visual character with a clear,
+                    user-focused experience."
+                </blockquote>
+                <div class="person">
+                    <div class="person-avatar c">RK</div>
+                    <div>
+                        <strong>Ryan Kim</strong>
+                        <small>Technology Consultant</small>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </div>
+</section>
+
+<!-- =========================================
+     PRICING
+========================================= -->
+<section class="section pricing-section" id="pricing">
+    <div class="container">
+
+        <div class="section-heading reveal">
+            <span class="eyebrow">SIMPLE & FLEXIBLE</span>
+            <h2>Choose your next<br><span class="gradient-text">level of growth.</span></h2>
+            <p>
+                Example pricing tiers for the homepage.
+                Customize the plans to match your actual product.
+            </p>
+        </div>
+
+        <div class="pricing-grid">
+
+            <article class="price-card reveal">
+                <div class="plan-name">Starter</div>
+                <p class="plan-description">For individuals exploring new possibilities.</p>
+                <div class="price">$0 <small>/ month</small></div>
+                <div class="price-note">Free demo tier</div>
+                <a href="#contact" class="btn btn-outline plan-button">Get Started</a>
+                <div class="plan-divider"></div>
+                <ul class="plan-list">
+                    <li><span>✓</span> Essential workspace</li>
+                    <li><span>✓</span> Basic project management</li>
+                    <li><span>✓</span> Core dashboard preview</li>
+                    <li><span>✓</span> Community resources</li>
+                </ul>
+            </article>
+
+            <article class="price-card featured reveal">
+                <span class="popular-label">MOST POPULAR</span>
+                <div class="plan-name">Professional</div>
+                <p class="plan-description">For ambitious teams ready to do more.</p>
+                <div class="price">$29 <small>/ month</small></div>
+                <div class="price-note">Illustrative pricing · billed monthly</div>
+                <a href="#contact" class="btn btn-primary plan-button">Choose Professional ↗</a>
+                <div class="plan-divider"></div>
+                <ul class="plan-list">
+                    <li><span>✓</span> Everything in Starter</li>
+                    <li><span>✓</span> Advanced analytics concept</li>
+                    <li><span>✓</span> Team collaboration tools</li>
+                    <li><span>✓</span> Workflow automation concept</li>
+                    <li><span>✓</span> Priority support option</li>
+                </ul>
+            </article>
+
+            <article class="price-card reveal">
+                <div class="plan-name">Enterprise</div>
+                <p class="plan-description">For organizations with bigger needs.</p>
+                <div class="price">Custom</div>
+                <div class="price-note">Tailored to your organization</div>
+                <a href="#contact" class="btn btn-outline plan-button">Contact Our Team</a>
+                <div class="plan-divider"></div>
+                <ul class="plan-list">
+                    <li><span>✓</span> Custom integrations</li>
+                    <li><span>✓</span> Advanced access controls</li>
+                    <li><span>✓</span> Dedicated onboarding option</li>
+                    <li><span>✓</span> Tailored implementation</li>
+                </ul>
+            </article>
+
+        </div>
+    </div>
+</section>
+
+<!-- =========================================
+     FAQ
+========================================= -->
+<section class="section" id="faq">
+    <div class="container">
+
+        <div class="section-heading reveal">
+            <span class="eyebrow">GOT QUESTIONS?</span>
+            <h2>Let's make things <span class="gradient-text">clear.</span></h2>
+            <p>Some useful answers to help visitors understand the platform.</p>
+        </div>
+
+        <div class="faq-list">
+
+            <div class="faq-item reveal">
+                <button class="faq-question" aria-expanded="false">
+                    What is NEXORA?
+                    <span class="faq-symbol">+</span>
+                </button>
+                <div class="faq-answer">
+                    <div><p>NEXORA is a fictional technology/SaaS brand used for this template. Customize the product description, features and branding for your own business.</p></div>
+                </div>
+            </div>
+
+            <div class="faq-item reveal">
+                <button class="faq-question" aria-expanded="false">
+                    Can I customize this website?
+                    <span class="faq-symbol">+</span>
+                </button>
+                <div class="faq-answer">
+                    <div><p>Yes. Colors, typography, sections, links, cards and pricing are all editable directly in this single HTML file.</p></div>
+                </div>
+            </div>
+
+            <div class="faq-item reveal">
+                <button class="faq-question" aria-expanded="false">
+                    Does this template require a framework?
+                    <span class="faq-symbol">+</span>
+                </button>
+                <div class="faq-answer">
+                    <div><p>No. The layout uses standard HTML, CSS and vanilla JavaScript. Save the code as index.html and open it in a modern browser.</p></div>
+                </div>
+            </div>
+
+            <div class="faq-item reveal">
+                <button class="faq-question" aria-expanded="false">
+                    Are payments and user accounts included?
+                    <span class="faq-symbol">+</span>
+                </button>
+                <div class="faq-answer">
+                    <div><p>No. The pricing cards are front-end examples only. Real accounts, payments, subscriptions and protected data require a backend and suitable service integrations.</p></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- =========================================
+     FINAL CALL TO ACTION
+========================================= -->
+<section class="cta-section" id="contact">
+    <div class="container">
+        <div class="cta-box reveal">
+            <div class="ambient purple"></div>
+
+            <span class="eyebrow">YOUR NEXT CHAPTER STARTS HERE</span>
+
+            <h2>
+                Ready to build something
+                <span class="gradient-text">extraordinary?</span>
+            </h2>
+
+            <p>
+                Take the next step toward a smarter digital experience.
+                Your next big idea deserves a better starting point.
+            </p>
+
+            <a href="mailto:hello@example.com?subject=NEXORA%20Product%20Enquiry"
+                class="btn btn-primary">
+                Let's Talk Business <span>↗</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+<footer class="footer">
+    <div class="container">
+
+        <div class="footer-main">
+
+            <div class="footer-brand">
+                <a class="brand" href="#home">
+                    <span class="brand-mark">N</span>
+                    NEXORA<span>.</span>
+                </a>
+
+                <p>
+                    Technology designed for ambitious minds.
+                    Build smarter experiences and bring your next
+                    big idea to life.
+                </p>
+
+                <div class="socials">
+                    <a href="https://www.linkedin.com/" target="_blank"
+                       rel="noopener noreferrer" aria-label="LinkedIn">in</a>
+                    <a href="https://www.instagram.com/" target="_blank"
+                       rel="noopener noreferrer" aria-label="Instagram">ig</a>
+                    <a href="https://x.com/" target="_blank"
+                       rel="noopener noreferrer" aria-label="X">𝕏</a>
+                    <a href="https://github.com/" target="_blank"
+                       rel="noopener noreferrer" aria-label="GitHub">gh</a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#about">Platform</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#faq">FAQs</a></li>
+                    <li><a href="#testimonials">Reviews</a></li>
+                    <li><a href="#about">Our approach</a></li>
+                    <li><a href="#contact">Get in touch</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="mailto:hello@example.com">Email us</a></li>
+                    <li><a href="#contact">Partnerships</a></li>
+                    <li><a href="#contact">Support</a></li>
+                    <li><a href="#contact">Business enquiries</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>© <span id="year"></span> NEXORA. Template demo — customize before publishing.</p>
+            <div class="footer-legal">
+                <a href="#faq">Privacy</a>
+                <a href="#faq">Terms</a>
+                <a href="#home">Back to top ↑</a>
+            </div>
+        </div>
+
+    </div>
+</footer>
+
+<script>
+/* =========================================
+   1. MOBILE NAVIGATION
+========================================= */
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", () => {
+    const isOpen = navLinks.classList.toggle("open");
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+    menuToggle.setAttribute(
+        "aria-label",
+        isOpen ? "Close navigation" : "Open navigation"
+    );
+});
+
+navLinks.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+    });
+});
+
+document.addEventListener("click", event => {
+    if (
+        !navLinks.contains(event.target) &&
+        !menuToggle.contains(event.target)
+    ) {
+        navLinks.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+    }
+});
+
+/* =========================================
+   2. HEADER SCROLL EFFECT
+========================================= */
+const header = document.getElementById("header");
+
+function updateHeader() {
+    header.classList.toggle("scrolled", window.scrollY > 15);
+}
+
+window.addEventListener("scroll", updateHeader, { passive: true });
+updateHeader();
+
+/* =========================================
+   3. SCROLL REVEAL ANIMATIONS
+========================================= */
+const revealItems = document.querySelectorAll(".reveal");
+
+if ("IntersectionObserver" in window) {
+    const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.12,
+        rootMargin: "0px 0px -25px 0px"
+    });
+
+    revealItems.forEach(item => revealObserver.observe(item));
+} else {
+    revealItems.forEach(item => item.classList.add("visible"));
+}
+
+/* =========================================
+   4. ANIMATED COUNTERS
+========================================= */
+const counters = document.querySelectorAll(".counter");
+
+function animateCounter(element) {
+    const target = Number(element.dataset.target);
+    const duration = 1200;
+    const start = performance.now();
+
+    function update(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+
+        element.textContent = Math.round(target * eased);
+
+        if (progress < 1) {
+            requestAnimationFrame(update);
+        }
+    }
+
+    requestAnimationFrame(update);
+}
+
+if ("IntersectionObserver" in window) {
+    const counterObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounter(entry.target);
+                counterObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    counters.forEach(counter => counterObserver.observe(counter));
+} else {
+    counters.forEach(counter => {
+        counter.textContent = counter.dataset.target;
+    });
+}
+
+/* =========================================
+   5. FAQ ACCORDION
+========================================= */
+document.querySelectorAll(".faq-question").forEach(button => {
+    button.addEventListener("click", () => {
+        const item = button.closest(".faq-item");
+        const wasOpen = item.classList.contains("open");
+
+        document.querySelectorAll(".faq-item").forEach(faq => {
+            faq.classList.remove("open");
+            faq.querySelector(".faq-question")
+                .setAttribute("aria-expanded", "false");
+        });
+
+        if (!wasOpen) {
+            item.classList.add("open");
+            button.setAttribute("aria-expanded", "true");
+        }
+    });
+});
+
+/* =========================================
+   6. ACTIVE NAVIGATION LINK
+========================================= */
+const pageSections = document.querySelectorAll("main section[id]");
+const navItems = document.querySelectorAll(".nav-links a");
+
+if ("IntersectionObserver" in window) {
+    const sectionObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navItems.forEach(link => {
+                    const active =
+                        link.getAttribute("href") === "#" + entry.target.id;
+
+                    link.classList.toggle("active", active);
+                });
+            }
+        });
+    }, {
+        rootMargin: "-25% 0px -65% 0px"
+    });
+
+    pageSections.forEach(section => sectionObserver.observe(section));
+}
+
+/* =========================================
+   7. CURRENT COPYRIGHT YEAR
+========================================= */
+document.getElementById("year").textContent =
+    new Date().getFullYear();
+</script>
+
+</body>
+</html>
